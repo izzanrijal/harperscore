@@ -49,48 +49,46 @@
     </div>
 
 	<script>
-		document.getElementById('calculator-form').addEventListener('submit', function(e) {
-			e.preventDefault();
-
-			const age = document.getElementById('age').value;
-			const dbp = document.getElementById('dbp').value;
-			const bmi = document.getElementById('bmi').value;
-			const hb = document.getElementById('hb').value;
-			const abg = document.getElementById('abg').value;
-			const hdl = document.getElementById('hdl').value;
-			const ef = document.getElementById('ef').value;
-			const s_lat = document.getElementById('s_lat').value;
-			const lvsv = document.getElementById('lvsv').value;
-			const lus_bline = document.getElementById('lus_bline').value;
-			const genderSelect = document.getElementById('gender');
-			const gender = genderSelect.value;
-
-			if (!age || !dbp || !hb || !abg || !s_lat || !lus_bline || gender === "") {
-				showModal('Please enter all fields');
-				return;
-			}
-
-			const log_odds = calculateLogOdds(parseFloat(age), parseFloat(dbp), parseFloat(bmi), parseFloat(hb), parseFloat(abg), parseFloat(hdl), parseFloat(ef), parseFloat(s_lat), parseFloat(lvsv), parseFloat(lus_bline), parseInt(gender));
-			const resultMessage = `<p>Based on the calculation, the patient has an odds ratio of</p>
-								   <p class="text-2xl font-bold my-2">${log_odds.toFixed(2)}</p>
-								   <p>for adverse events such as death or rehospitalization within 90 days post-admission compared to other heart failure patients.</p>`;
-			showModal(resultMessage);
-		});
-
-		function calculateLogOdds(age, dbp, hb, abg, s_lat, lus_bline, gender) {
-			return (3.055 - 0 * reduced_EF + 0.073 * gender + 0.023 * age - 0.016 * dbp + 0.001 * hb + 0.003 * abg + 0.044 * s_lat + 0.047 * lus_bline);
-		}
-
-		function showModal(message) {
-			const modalBody = document.getElementById('modal-body');
-			modalBody.innerHTML = message;
-			document.getElementById('resultModal').classList.remove('hidden');
-		}
-
-		document.getElementById('modal-close').addEventListener('click', function() {
-			document.getElementById('resultModal').classList.add('hidden');
-		});
+	    document.getElementById('calculator-form').addEventListener('submit', function(e) {
+	        e.preventDefault();
+	
+	        const age = document.getElementById('age').value;
+	        const dbp = document.getElementById('dbp').value;
+	        const hb = document.getElementById('hb').value;
+	        const abg = document.getElementById('abg').value;
+	        const s_lat = document.getElementById('s_lat').value;
+	        const lus_bline = document.getElementById('lus_bline').value;
+	        const genderSelect = document.getElementById('gender');
+	        const gender = genderSelect.value;
+	
+	        if (!age || !dbp || !hb || !abg || !s_lat || !lus_bline || gender === "") {
+	            showModal('Please enter all fields');
+	            return;
+	        }
+	
+	        const log_odds = calculateLogOdds(parseFloat(age), parseFloat(dbp), parseFloat(hb), parseFloat(abg), parseFloat(s_lat), parseFloat(lus_bline), parseInt(gender));
+	        const resultMessage = `<p>Based on the calculation, the patient has an odds ratio of</p>
+	                               <p class="text-2xl font-bold my-2">${log_odds.toFixed(2)}</p>
+	                               <p>for adverse events such as death or rehospitalization within 90 days post-admission compared to other heart failure patients.</p>`;
+	        showModal(resultMessage);
+	    });
+	
+	    function calculateLogOdds(age, dbp, hb, abg, s_lat, lus_bline, gender) {
+	        // Adjust this formula based on your requirements.
+	        return (3.055 - 0 * reduced_EF + 0.073 * gender + 0.023 * age - 0.016 * dbp + 0.001 * hb + 0.003 * abg + 0.044 * s_lat + 0.047 * lus_bline);
+	    }
+	
+	    function showModal(message) {
+	        const modalBody = document.getElementById('modal-body');
+	        modalBody.innerHTML = message;
+	        document.getElementById('resultModal').classList.remove('hidden');
+	    }
+	
+	    document.getElementById('modal-close').addEventListener('click', function() {
+	        document.getElementById('resultModal').classList.add('hidden');
+	    });
 	</script>
+
 
 </body>
 </html>
