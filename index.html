@@ -23,13 +23,9 @@
 		</div>
 		<input type="number" id="age" placeholder="Age" class="w-full p-2 border rounded" step="any">
             <input type="number" id="dbp" placeholder="Diastolic Blood Pressure (DBP)" class="w-full p-2 border rounded" step="any">
-            <input type="number" id="bmi" placeholder="Body Mass Index (BMI)" class="w-full p-2 border rounded" step="any">
             <input type="number" id="hb" placeholder="Hemoglobin (Hb)" class="w-full p-2 border rounded" step="any">
             <input type="number" id="abg" placeholder="Admission Blood Glucose" class="w-full p-2 border rounded" step="any">
-            <input type="number" id="hdl" placeholder="High-Density Lipoprotein (HDL)" class="w-full p-2 border rounded" step="any">
-            <input type="number" id="ef" placeholder="Ejection Fraction (EF)" class="w-full p-2 border rounded" step="any">
             <input type="number" id="s_lat" placeholder="S Lateral (S' Lat)" class="w-full p-2 border rounded" step="any">
-            <input type="number" id="lvsv" placeholder="Left Ventricular Stroke Volume (LVSV)" class="w-full p-2 border rounded" step="any">
             <input type="number" id="lus_bline" placeholder="Lung Ultrasound B-lines (LUS B-line)" class="w-full p-2 border rounded" step="any">
 
             <button type="submit" class="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600">Assess Odds</button>
@@ -69,7 +65,7 @@
 			const genderSelect = document.getElementById('gender');
 			const gender = genderSelect.value;
 
-			if (!age || !dbp || !bmi || !hb || !abg || !hdl || !ef || !s_lat || !lvsv || !lus_bline || gender === "") {
+			if (!age || !dbp || !hb || !abg || !s_lat || !lus_bline || gender === "") {
 				showModal('Please enter all fields');
 				return;
 			}
@@ -83,7 +79,7 @@
 
 		function calculateLogOdds(age, dbp, bmi, hb, abg, hdl, ef, s_lat, lvsv, lus_bline, gender) {
 			const reduced_EF = ef < 40 ? 1 : 0;
-			return (3.055 - 0 * reduced_EF + 0.073 * gender + 0.023 * age - 0.016 * dbp + 0.001 * bmi - 0.212 * hb + 0.003 * abg - 0 * hdl + 0.044 * s_lat - 0 * lvsv + 0.047 * lus_bline);
+			return (3.055 - 0 * reduced_EF + 0.073 * gender + 0.023 * age - 0.016 * dbp + 0.001 * hb + 0.003 * abg + 0.044 * s_lat + 0.047 * lus_bline);
 		}
 
 		function showModal(message) {
