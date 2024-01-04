@@ -77,8 +77,7 @@
 			showModal(resultMessage);
 		});
 
-		function calculateLogOdds(age, dbp, bmi, hb, abg, hdl, ef, s_lat, lvsv, lus_bline, gender) {
-			const reduced_EF = ef < 40 ? 1 : 0;
+		function calculateLogOdds(age, dbp, hb, abg, s_lat, lus_bline, gender) {
 			return (3.055 - 0 * reduced_EF + 0.073 * gender + 0.023 * age - 0.016 * dbp + 0.001 * hb + 0.003 * abg + 0.044 * s_lat + 0.047 * lus_bline);
 		}
 
