@@ -17,12 +17,11 @@
 			<label for="gender" class="block text-sm font-medium text-gray-700">Gender</label>
 			<select id="gender" name="gender" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md" required>
 				<option value="" disabled selected>Select Option</option>
-				<option value="0">Male</option>
-				<option value="1">Female</option>
+				<option value="1">Male</option>
+				<option value="0">Female</option>
 			</select>
 		</div>
 	    <input type="number" id="age" placeholder="Age" class="w-full p-2 border rounded" step="any">
-            <input type="number" id="dbp" placeholder="Diastolic Blood Pressure (DBP)" class="w-full p-2 border rounded" step="any">
             <input type="number" id="hb" placeholder="Hemoglobin (Hb)" class="w-full p-2 border rounded" step="any">
             <input type="number" id="abg" placeholder="Admission Blood Glucose" class="w-full p-2 border rounded" step="any">
             <input type="number" id="s_lat" placeholder="S Lateral (S' Lat)" class="w-full p-2 border rounded" step="any">
@@ -53,7 +52,6 @@
 	        e.preventDefault();
 	
 	        const age = document.getElementById('age').value;
-	        const dbp = document.getElementById('dbp').value;
 	        const hb = document.getElementById('hb').value;
 	        const abg = document.getElementById('abg').value;
 	        const s_lat = document.getElementById('s_lat').value;
@@ -61,23 +59,25 @@
 	        const genderSelect = document.getElementById('gender');
 	        const gender = genderSelect.value;
 	
-	        if (!age || !dbp || !hb || !abg || !s_lat || !lus_bline || gender === "") {
+	        if (!age || !hb || !abg || !s_lat || !lus_bline || gender === "") {
 	            showModal('Please enter all fields');
 	            return;
 	        }
 	
-	        const log_odds = calculateLogOdds(parseFloat(age), parseFloat(dbp), parseFloat(hb), parseFloat(abg), parseFloat(s_lat), parseFloat(lus_bline), parseInt(gender));
+	        const log_odds = calculateLogOdds(parseFloat(age), parseFloat(hb), parseFloat(abg), parseFloat(s_lat), parseFloat(lus_bline), parseInt(gender));
 	        const resultMessage = `<p>Based on the calculation, the patient has an odds ratio of</p>
 	                               <p class="text-2xl font-bold my-2">${log_odds.toFixed(2)}</p>
 	                               <p>for adverse events such as death or rehospitalization within 90 days post-admission compared to other heart failure patients.</p>`;
 	        showModal(resultMessage);
 	    });
 	
-	    function calculateLogOdds(age, dbp, hb, abg, s_lat, lus_bline, gender) {
+	    function calculateLogOdds(age, hb, abg, s_lat, lus_bline, gender) {
 	        // Adjust this formula based on your requirements.
-	        return (3.055 - 0.73 * gender + 0.023 * age - 0.016 * dbp + 0.212 * hb + 0.003 * abg + 0.044 * s_lat + 0.047 * lus_bline);
+	        return (9.548 + 0.467 * gender + 0.04 * age - 0.418 * hb + 0.004 * abg + 0.094 * lus_bline);
 	    }
 	
+
+
 	    function showModal(message) {
 	        const modalBody = document.getElementById('modal-body');
 	        modalBody.innerHTML = message;
